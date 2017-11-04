@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<configuration debug="false">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%green(%date{yyyyMMdd_HH:mm:ss.SSS, Australia/Sydney}) %highlight(%-5level) %cyan(%logger{36}) %yellow(%X{akkaSource}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="com.zaxxer.hikari.pool.HikariPool" level="INFO" />
+    <logger name="slick.compiler" level="INFO" />
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
