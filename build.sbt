@@ -41,7 +41,7 @@ lazy val factorie_nlp = project.settings(
 	name:= factorieName,
   version := factorieVersion,
 	commonSettings,
-	libraryDependencies ++= (factorieDeps ++ commonDeps),
+	libraryDependencies ++= (factorieDeps ++ commonDeps ++ testDeps),
   publish := publishFactorie
 ) //.dependsOn(factorie_nlp_models)
 	
@@ -73,6 +73,7 @@ lazy val commonDeps = Seq(
 	"org.json4s" %% "json4s-jackson" % json4sV,
 	//"org.slf4j" % "slf4j-api" % slf4jV,
   //"org.apache.logging.log4j" % "log4j-core" % "2.9.1",
+  "org.apache.logging.log4j" % "log4j-core" % "2.8.1",
 	"ch.qos.logback" % "logback-classic" % logbackV
 )
 
