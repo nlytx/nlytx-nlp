@@ -12,10 +12,8 @@ Add the following to your build.sbt file:
 
 ```scala
 libraryDependencies ++= Seq(
-                          "io.nlytx" %% "nlytx-nlp-api" % "1.0.0",
-                          "io.nlytx" %% "factorie-nlp" % "1.0.0",
-                          "io.nlytx" %% "factorie-nlp-models" % "1.0.2"
-                          )
+        "io.nlytx" %% "nlytx-nlp-api" % "1.0.1",
+        "io.nlytx" %% "factorie-nlp-models" % "1.0.3")
 
 resolvers += Resolver.bintrayRepo("nlytx-io", "factorie-nlp-api")
 ```
