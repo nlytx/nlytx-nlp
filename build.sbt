@@ -74,7 +74,8 @@ lazy val commonDeps = Seq(
 )	
 
 lazy val testDeps = Seq(
-  "org.scalatest" %% "scalatest" % scalatestV % Test
+  "org.scalatest" %% "scalatest" % scalatestV % Test,
+  "io.nlytx" %% "factorie-nlp-models" % modelsVersion % Test
 )
 
 /* Publishing  */
@@ -94,11 +95,17 @@ lazy val publishModels = Seq(
 )
 
 lazy val publishApi = Seq(
-
+  publishMavenStyle := true,
+  licenses += pubLicence,
+  publishTo := apiBinTray,
+  credentials += binTrayCred
 )
 
 lazy val publishFactorie = Seq(
-
+  publishMavenStyle := true,
+  licenses += pubLicence,
+  publishTo := factorieBinTray,
+  credentials += binTrayCred
 )
 
 /*

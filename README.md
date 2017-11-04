@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/nlytx/factorie-nlp-api.svg?branch=master)](https://travis-ci.org/nlytx/factorie-nlp-api) ![scalaVersion](https://img.shields.io/badge/scala-2.12.4-blue.svg) ![license](https://img.shields.io/badge/license-Apache%202-blue.svg)  [ ![Download](https://api.bintray.com/packages/nlytx-io/factorie-nlp-api/factorie-nlp-api/images/download.svg?version=0.5.0) ](https://bintray.com/nlytx-io/factorie-nlp-api/factorie-nlp-api/0.5.0/link)
+[![Build Status](https://travis-ci.org/nlytx/factorie-nlp-api.svg?branch=master)](https://travis-ci.org/nlytx/factorie-nlp-api) ![scalaVersion](https://img.shields.io/badge/scala-2.12.4-blue.svg) ![Liencse](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)
 
-# factorie-nlp-api
+# nlytx-nlp
 
 This is a significantly modified version of [Factorie](https://github.com/factorie/factorie) providing only NLP services via a high level API using akka streams. For more detail on the differences [see below](#diffs)
 
@@ -10,8 +10,9 @@ Add the following to your build.sbt file:
 
 ```scala
 libraryDependencies ++= Seq(
-                          "io.nlytx" %% "factorie-nlp-api" % "0.3",
-                          "cc.factorie.app.nlp" % "all-models" % "1.2"
+                          "io.nlytx" %% "nlytx-nlp-api" % "1.0.0",
+                          "io.nlytx" %% "factorie-nlp" % "1.0.0",
+                          "io.nlytx" %% "factorie-nlp-models" % "1.0.2"
                           )
 
 resolvers += Resolver.bintrayRepo("nlytx-io", "factorie-nlp-api")
