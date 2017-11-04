@@ -51,8 +51,6 @@ lazy val nlytx_nlp_api = project.settings(
 //	libraryDependencies ++= (factorieDeps ++ commonDeps),
 //  publish := publishFactorie
 //).dependsOn(factorie_nlp_models)
-
- 
 	
 lazy val factorie_nlp_models = project.settings(
   name := modelsName,
@@ -64,7 +62,6 @@ lazy val factorie_nlp_models = project.settings(
 /* Dependencies */
 
 lazy val nlytxDeps = Seq(
-  "io.nlytx" %% "factorie-nlp-models" % modelsVersion,
   "com.typesafe.akka" %% "akka-stream" % akkaStreamV,
   "com.typesafe.akka" %% "akka-slf4j" % akkaStreamV,
 )
@@ -83,7 +80,7 @@ lazy val commonDeps = Seq(
 	"org.json4s" %% "json4s-jackson" % json4sV,
 	"org.slf4j" % "slf4j-api" % slf4jV,
 	"ch.qos.logback" % "logback-classic" % logbackV
-)
+)	
 
 lazy val testDeps = Seq(
   "org.scalatest" %% "scalatest" % scalatestV % Test
@@ -106,17 +103,11 @@ lazy val publishModels = Seq(
 )
 
 lazy val publishApi = Seq(
-  publishMavenStyle := true,
-  licenses += pubLicence,
-  publishTo := apiBinTray,
-  credentials += binTrayCred
+
 )
 
 lazy val publishFactorie = Seq(
-  publishMavenStyle := true,
-  licenses += pubLicence,
-  publishTo := factorieBinTray,
-  credentials += binTrayCred
+
 )
 
 /*
