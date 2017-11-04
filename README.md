@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/nlytx/factorie-nlp-api.svg?branch=master)](https://travis-ci.org/nlytx/factorie-nlp-api) ![scalaVersion](https://img.shields.io/badge/scala-2.12.4-blue.svg) ![Liencse](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)
 
+[ ![Download](https://api.bintray.com/packages/nlytx/nlytx-nlp/factorie-nlp-models/images/download.svg) ](https://bintray.com/nlytx/nlytx-nlp/factorie-nlp-models/_latestVersion) *factorie-nlp-models*
+
 # nlytx-nlp
 
 This is a significantly modified version of [Factorie](https://github.com/factorie/factorie) providing only NLP services via a high level API using akka streams. For more detail on the differences [see below](#diffs)
