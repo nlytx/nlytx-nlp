@@ -71,9 +71,7 @@ lazy val factorieDeps = Seq(
 
 lazy val commonDeps = Seq(
 	"org.json4s" %% "json4s-jackson" % json4sV,
-	//"org.slf4j" % "slf4j-api" % slf4jV,
-  //"org.apache.logging.log4j" % "log4j-core" % "2.9.1",
-  "org.apache.logging.log4j" % "log4j-core" % "2.8.1",
+	"org.slf4j" % "slf4j-api" % slf4jV,
 	"ch.qos.logback" % "logback-classic" % logbackV
 )
 
