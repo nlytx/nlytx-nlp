@@ -13,7 +13,7 @@
 
 
 
-package cc.factorie.util 
+package cc.factorie.util
 import scala.collection.mutable.WeakHashMap
 
 // TODO This is ugly.  Implement this properly, instead of using silly inner WeakHashMap
