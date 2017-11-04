@@ -1,7 +1,7 @@
 /* Main settings */
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.4",
+  scalaVersion := "2.12.3",
   organization := "io.nlytx"
 )
 
@@ -11,11 +11,11 @@ val modelsName = "factorie-nlp-models"
 
 /* Versions */
 
-val apiVersion = "1.0.0"
+val apiVersion = "1.0.1"
 val factorieVersion = apiVersion
-val modelsVersion = "1.0.2"
+val modelsVersion = "1.0.3"
 
-val scalaLangV = "2.12.4"
+val scalaLangV = "2.12.3"
 val scalaParserV = "1.0.6"
 val jblasV = "1.2.4"
 val apacheComsCompressV = "1.15"
@@ -28,21 +28,29 @@ val scalatestV = "3.0.4"
 
 /* Projects */
 
+lazy val nlytx_root = project.settings(
+  publishArtifact in (Compile, packageBin) := false, // there are no binaries
+  publishArtifact in (Compile, packageDoc) := false, // there are no javadocs
+  publishArtifact in (Compile, packageSrc) := false  // there are no sources
+).aggregate(nlytx_nlp_api,factorie_nlp_models)
+
+
 lazy val nlytx_nlp_api = project.settings(
   name := apiName,
   version := apiVersion,
   commonSettings,
-  libraryDependencies ++= (nlytxDeps ++ commonDeps ++ testDeps),
+  libraryDependencies ++= (nlytxDeps ++ factorieDeps ++ commonDeps ++ testDeps),
+  resolvers += Resolver.bintrayRepo("nlytx","nlytx-nlp"),
   publish := publishApi
-).dependsOn(factorie_nlp)
+) //.dependsOn(factorie_nlp)
 
-lazy val factorie_nlp = project.settings(
-	name:= factorieName,
-  version := factorieVersion,
-	commonSettings,
-	libraryDependencies ++= (factorieDeps ++ commonDeps),
-  publish := publishFactorie
-).dependsOn(factorie_nlp_models)
+//lazy val factorie_nlp = project.settings(
+//	name:= factorieName,
+//  version := factorieVersion,
+//	commonSettings,
+//	libraryDependencies ++= (factorieDeps ++ commonDeps),
+//  publish := publishFactorie
+//).dependsOn(factorie_nlp_models)
 	
 lazy val factorie_nlp_models = project.settings(
   name := modelsName,
@@ -59,6 +67,7 @@ lazy val nlytxDeps = Seq(
 )
 
 lazy val factorieDeps = Seq(
+  "io.nlytx" %% "factorie-nlp-models" % "1.0.3",
   "org.scala-lang.modules" %% "scala-parser-combinators" % scalaParserV,
   "org.scala-lang" % "scala-compiler" % scalaLangV,
   "org.scala-lang" % "scala-reflect" % scalaLangV,

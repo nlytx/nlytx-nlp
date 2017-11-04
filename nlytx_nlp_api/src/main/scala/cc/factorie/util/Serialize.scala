@@ -204,6 +204,7 @@ object BinarySerializer extends GlobalLogging {
           case (DENSE_TENSOR, 1) => new DenseTensor1(dims(0))
           case (DENSE_TENSOR, 2) => new DenseTensor2(dims(0), dims(1))
           case (DENSE_TENSOR, 3) => new DenseTensor3(dims(0), dims(1), dims(2))
+          case _ => ??? //TODO Need an exhaustive case
         }
       newBlank match {
         case nb: ArraySparseIndexedTensor =>
