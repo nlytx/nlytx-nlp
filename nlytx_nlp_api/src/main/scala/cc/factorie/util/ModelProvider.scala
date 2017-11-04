@@ -76,7 +76,8 @@ import scala.reflect.{ClassTag, classTag}
  * to certain models you will need to provide it afterwards to override it.
  *
  * To inspect what model path is currently being provided for a given class, use [[ModelProvider.providerFor]].
- * @author johnsullivan
+  *
+  * @author johnsullivan
  * @tparam Consumer The class of the Model that is required
  */
 trait ModelProvider[+Consumer] {

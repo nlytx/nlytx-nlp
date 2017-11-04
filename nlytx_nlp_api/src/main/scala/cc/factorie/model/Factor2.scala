@@ -260,6 +260,7 @@ trait Family2[N1<:Var,N2<:Var] extends FamilyWithNeighborDomains {
           v.scale*score(domain0(v1.singleIndex), v2)
       }
     }
+    case _ => ??? //TODO Need an exhaustive case
   }
 
   // For implementing sparsity in belief propagation

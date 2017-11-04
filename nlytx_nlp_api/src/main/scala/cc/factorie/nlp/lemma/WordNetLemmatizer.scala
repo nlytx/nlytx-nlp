@@ -24,7 +24,7 @@ import scala.io.Source
 // TODO Rather than reading the WordNet files here, I think this object should simply depend on newly-written methods in wordnet.WordNet. -akm 
 
 class WordNetLemmatizer(val inputStreamFactory: String=>InputStream) extends DocumentAnnotator {
-  def this(wordNetDir:java.io.File) = this((string:String) => new FileInputStream(new java.io.File(wordNetDir, string)))
+  //def this(wordNetDir:java.io.File) = this((string:String) => new FileInputStream(new java.io.File(wordNetDir, string)))
 
   val resourcePath = "dict/"
   def sourceFactory(string:String): Source = Source.fromInputStream(inputStreamFactory(resourcePath+string))
@@ -55,6 +55,7 @@ class WordNetLemmatizer(val inputStreamFactory: String=>InputStream) extends Doc
     ADVB -> new scala.collection.mutable.HashMap[String, String]() { override def default(key:String): String = key }
   )
 
+
   val wordNetWords = Map[String, scala.collection.mutable.HashSet[String]](
     NOUN -> new scala.collection.mutable.HashSet[String](),
     VERB -> new scala.collection.mutable.HashSet[String](),
@@ -63,6 +64,7 @@ class WordNetLemmatizer(val inputStreamFactory: String=>InputStream) extends Doc
   )
 
   for ((f, pos) <- Seq(("adj", ADJC), ("adv", ADVB), ("noun", NOUN), ("verb", VERB))) {
+    //println("Getting file: "+f) //TODO this should fail gracefully if a file is missing
     for (line <- sourceFactory(f + ".exc").getLines()) {
       val fields = line.split(" ")
       if (fields(0).indexOf('_') == -1) // For now skip multi-word phrases (indicated by underscore in WordNet)
@@ -111,7 +113,7 @@ class WordNetLemmatizer(val inputStreamFactory: String=>InputStream) extends Doc
   }
 }
 
-object WordNetLemmatizer extends WordNetLemmatizer(string => ClasspathURL.fromDirectory[WordNet](string).openConnection().getInputStream)
+//object WordNetLemmatizer extends WordNetLemmatizer(string => ClasspathURL.fromDirectory[WordNet](string).openConnection().getInputStream)
 
 //string => {
 //import java.io.File

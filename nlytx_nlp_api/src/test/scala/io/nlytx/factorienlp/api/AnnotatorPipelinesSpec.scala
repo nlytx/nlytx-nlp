@@ -22,14 +22,12 @@ class AnnotatorPipelinesSpec extends FlatSpec with Matchers {
     val doc = ap.profile(singleSentence,ap.fastPipeline,60)
     val tokens = doc.tokens.toVector
     val posString = tokens.map(_.posTag.value.toString).mkString(",")
-    //val lemmaString = tokens.map(_.lemma.value.toString).mkString(" ")
     doc.tokenCount shouldBe 7
     doc.sentenceCount shouldBe 1
     doc.string shouldBe singleSentence
     posString shouldBe "DT,JJ,NN,VBZ,VBN,VBN,."
-    //lemmaString shouldBe "a valid document has been created ."
   }
-/*
+
   "defaultPipeline" should "result in a Document with postags and lemmas" in {
     val doc = ap.profile(twoSentences,ap.defaultPipeline,60)
     val tokens = doc.tokens.toVector
@@ -41,7 +39,7 @@ class AnnotatorPipelinesSpec extends FlatSpec with Matchers {
     posString shouldBe "DT,JJ,NN,VBZ,VBN,VBN,.,PRP,MD,VB,CD,NNS,."
     lemmaString shouldBe "a valid document have be create . it should have two sentence ."
   }
-
+/*
   "parserPipeline" should "result in a document with parsing" in {
     val parserDoc = ap.profile(threeSentences,ap.parserPipeline,120)
     val parseTree = parserDoc.sentences.head.parse.toString.replaceAllLiterally("\n",",")
@@ -65,3 +63,35 @@ class AnnotatorPipelinesSpec extends FlatSpec with Matchers {
  */
 
 }
+
+/*
+object WordNetTest {
+
+  //System.setProperty("cc.factorie.app.nlp.wordnet.WordNet", "file:/Users/mccallum/research/data/resources/wordnet/WordNet-1.7.1")
+  println("Setting property to "+classOf[WordNet].getName)
+  System.setProperty(classOf[WordNet].getName, "file:/Users/mccallum/research/data/resources/wordnet/WordNet-1.7.1")
+
+  /*  pass in the absolute path to the wordnet data dir (that includes the data.* and index.* files  */
+  def main(args: Array[String]) {
+    val wn = WordNet //new cc.factorie.app.nlp.wordnet.WordNet(new java.io.File(args(0)))
+    assert(wn.areAntonyms("good", "evil"))
+    assert(!wn.areAntonyms("good", "star"))
+    assert(wn.areAntonyms("right", "left"))
+    assert(wn.areAntonyms("right", "wrong"))
+    assert(!wn.areAntonyms("right", "wasdkjfklj"))
+
+    assert(wn.isHypernymOf("red", "crimson"))
+    assert(!wn.isHyponymOf("crimson", "crimson"))
+    assert(wn.isHyponymOf("crimson", "red"))
+
+    assert(wn.areSynonyms("soul", "person"))
+    assert(!wn.areSynonyms("dog", "cat"))
+    assert(wn.shareHypernyms("dog", "cat"))
+    assert(!wn.areSynonyms("hot", "cold"))
+
+    assert(wn.areAntonyms(wn.lemma("goodness", "N"), "evil"))
+
+    println("[done small tests.]")
+  }
+}
+*/

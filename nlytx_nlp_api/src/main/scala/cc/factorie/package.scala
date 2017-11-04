@@ -14,8 +14,8 @@
 package cc
 import java.io.{PrintStream, ByteArrayOutputStream, BufferedReader}
 
-import cc.factorie.util._
-import cc.factorie.variable.BagOfWords
+import factorie.util._
+import factorie.variable.BagOfWords
 
 import scala.language.implicitConversions
 import scala.reflect.runtime.universe._
@@ -35,8 +35,8 @@ package object factorie extends CubbieConversions {
 
   def when[A](cond:Boolean, a: => A):Option[A] = if(cond) Some(a) else None
 
-  implicit def traversableExtras[A](t: Traversable[A]) = new cc.factorie.util.TraversableExtras[A](t)
-  implicit def stringExtras(x:String) = new cc.factorie.util.StringExtras(x)
+  implicit def traversableExtras[A](t: Traversable[A]) = new factorie.util.TraversableExtras[A](t)
+  implicit def stringExtras(x:String) = new factorie.util.StringExtras(x)
   implicit class IntPairExtras(val x:(Int, Int)) {
     def overlapsWith(y:(Int, Int)):Boolean = (x._1 >= y._1 && x._1 <= y._2) || (x._2 >= y._1 && x._2 <= y._2)
   }
@@ -95,15 +95,15 @@ package object factorie extends CubbieConversions {
   def assertMinimalAccuracy(got:Double, goal:Double): Unit = assert(got >= goal, s"Accuracy ${got} is less than expected ${goal}.")
   def assertDoubleEquals(got:Double, goal:Double, epsilon:Double): Unit = assert(Math.abs(got-goal) < epsilon, s"Got: $got, expected: $goal")
 
-  type DenseTensor1 = cc.factorie.la.DenseTensor1
-  type DenseTensor2 = cc.factorie.la.DenseTensor2
-  type DenseTensor3 = cc.factorie.la.DenseTensor3
-  type DenseTensor4 = cc.factorie.la.DenseTensor4
+  type DenseTensor1 = factorie.la.DenseTensor1
+  type DenseTensor2 = factorie.la.DenseTensor2
+  type DenseTensor3 = factorie.la.DenseTensor3
+  type DenseTensor4 = factorie.la.DenseTensor4
 
-  type Tensor1 = cc.factorie.la.Tensor1
-  type Tensor2 = cc.factorie.la.Tensor2
-  type Tensor3 = cc.factorie.la.Tensor3
-  type Tensor4 = cc.factorie.la.Tensor4
+  type Tensor1 = factorie.la.Tensor1
+  type Tensor2 = factorie.la.Tensor2
+  type Tensor3 = factorie.la.Tensor3
+  type Tensor4 = factorie.la.Tensor4
 
   type Var = variable.Var
 

@@ -22,10 +22,11 @@ import scala.io.Source
 
 class WordNet(val inputStreamFactory: String=>java.io.InputStream) {
 
-  def this(wordNetDir:java.io.File) = this((string:String) => new java.io.FileInputStream(new java.io.File(wordNetDir, string)))
+  //def this(wordNetDir:java.io.File) = this((string:String) => new java.io.FileInputStream(new java.io.File(wordNetDir, string)))
 
   val resourcePath = "dict/"
   def sourceFactory(string:String): Source = Source.fromInputStream(inputStreamFactory(resourcePath+string))
+
   
   val ignoredSynsets = Set("n00002137", "n00001930", "n00001740")
   /* for converting from hexidecimal */
@@ -42,6 +43,7 @@ class WordNet(val inputStreamFactory: String=>java.io.InputStream) {
    * all of the data and index files and extracts information from them
    * To speed this up, we can combine the wnLemmatizer intialization and the
    * WordNet intialization used below */
+
   val wnLemmatizer = new WordNetLemmatizer(inputStreamFactory)
 
   /* There are 2 types of files we deal with here for wordnet:
@@ -120,6 +122,7 @@ class WordNet(val inputStreamFactory: String=>java.io.InputStream) {
 
   val allSynsets    = synsetsBuilder
   val lemma2synsets = lemma2synsetsBuilder.map(x => (x._1,x._2.toList)).toMap
+
 
   /* get the lemma of a particular word using a port of the wordnet lemmatizer */
   def lemma(s: String, pos: String): String = this.wnLemmatizer.lemma(s, pos)
