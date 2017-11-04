@@ -66,6 +66,7 @@ class ExponentiatedGradient(rate: Double = 1.0) extends GradientOptimizer {
             newWeightsSum += newWeight
             i += 1
           }
+        case _ => ??? //TODO Need an exhaustive case
       }
     weights *= (1 / newWeightsSum)
     println(weights.oneNorm)
@@ -111,6 +112,7 @@ class DenseExponentiatedGradient(rate: Double = 1.0, annealRate: Boolean = true)
             wArr(i) = math.exp(wArr(i) - logZ)
             i += 1
           }
+        case _ => ??? //TODO Need an exhaustive case
       }
   }
   def isConverged: Boolean = false
