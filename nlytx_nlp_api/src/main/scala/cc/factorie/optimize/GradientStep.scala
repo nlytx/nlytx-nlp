@@ -237,6 +237,7 @@ trait AdaptiveLearningRate extends GradientStep {
             }
             i += 1
           }
+        case _ => ??? //TODO Need an exhaustive case
       }
   }
 }

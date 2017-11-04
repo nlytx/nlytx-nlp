@@ -22,10 +22,16 @@ import scala.io.Source
 
 class WordNet(val inputStreamFactory: String=>java.io.InputStream) {
 
-  def this(wordNetDir:java.io.File) = this((string:String) => new java.io.FileInputStream(new java.io.File(wordNetDir, string)))
+  //def this(wordNetDir:java.io.File) = this((string:String) => new java.io.FileInputStream(new java.io.File(wordNetDir, string)))
 
+  println("Creating WordNet")
   val resourcePath = "dict/"
-  def sourceFactory(string:String): Source = Source.fromInputStream(inputStreamFactory(resourcePath+string))
+  def sourceFactory(string:String): Source = {
+    println("Getting wordnet source")
+    val src = Source.fromInputStream(inputStreamFactory(resourcePath+string))
+    println("Found: "+src.mkString)
+    src
+  }
   
   val ignoredSynsets = Set("n00002137", "n00001930", "n00001740")
   /* for converting from hexidecimal */
@@ -42,8 +48,9 @@ class WordNet(val inputStreamFactory: String=>java.io.InputStream) {
    * all of the data and index files and extracts information from them
    * To speed this up, we can combine the wnLemmatizer intialization and the
    * WordNet intialization used below */
+  println("Creating wordnet lemmatiser")
   val wnLemmatizer = new WordNetLemmatizer(inputStreamFactory)
-
+  println("After lemmatizer")
   /* There are 2 types of files we deal with here for wordnet:
        1) the data file - this file has 1 line per synset and
           includes the ids of all related synsets. This means
@@ -120,6 +127,8 @@ class WordNet(val inputStreamFactory: String=>java.io.InputStream) {
 
   val allSynsets    = synsetsBuilder
   val lemma2synsets = lemma2synsetsBuilder.map(x => (x._1,x._2.toList)).toMap
+
+  println("After lemma2synsets")
 
   /* get the lemma of a particular word using a port of the wordnet lemmatizer */
   def lemma(s: String, pos: String): String = this.wnLemmatizer.lemma(s, pos)
