@@ -6,7 +6,7 @@ lazy val commonSettings = Seq(
 )
 
 val apiName = "nlytx-nlp-api"
-val apiVersion = "1.0.1"
+val apiVersion = "1.0.2"
 val publish_api_to_BinTray = true
 
 val modelsName = "factorie-nlp-models"
