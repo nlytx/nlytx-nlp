@@ -1,7 +1,8 @@
-[![Build Status](https://travis-ci.org/nlytx/nlytx-nlp.svg?branch=master)](https://travis-ci.org/nlytx/nlytx-nlp) ![scalaVersion](https://img.shields.io/badge/scala-2.12.4-blue.svg) ![Liencse](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)
+[![Build Status](https://travis-ci.org/nlytx/nlytx-nlp.svg?branch=master)](https://travis-ci.org/nlytx/nlytx-nlp) ![scalaVersion](https://img.shields.io/badge/scala-2.12.4-red.svg) ![Liencse](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)
 
 [ ![Download](https://api.bintray.com/packages/nlytx/nlytx-nlp/factorie-nlp-models/images/download.svg) ](https://bintray.com/nlytx/nlytx-nlp/factorie-nlp-models/_latestVersion) *factorie-nlp-models*
 
+[ ![Download](https://api.bintray.com/packages/nlytx/nlytx-nlp/nlytx-nlp-api/images/download.svg) ](https://bintray.com/nlytx/nlytx-nlp/nlytx-nlp-api/_latestVersion) *nlytx-nlp-api*
 # nlytx-nlp
 
 This is a significantly modified version of [Factorie](https://github.com/factorie/factorie) providing only NLP services via a high level API using akka streams. For more detail on the differences [see below](#diffs)
@@ -12,10 +13,8 @@ Add the following to your build.sbt file:
 
 ```scala
 libraryDependencies ++= Seq(
-                          "io.nlytx" %% "nlytx-nlp-api" % "1.0.0",
-                          "io.nlytx" %% "factorie-nlp" % "1.0.0",
-                          "io.nlytx" %% "factorie-nlp-models" % "1.0.2"
-                          )
+        "io.nlytx" %% "nlytx-nlp-api" % "1.0.1",
+        "io.nlytx" %% "factorie-nlp-models" % "1.0.3")
 
 resolvers += Resolver.bintrayRepo("nlytx-io", "factorie-nlp-api")
 ```
@@ -23,14 +22,15 @@ resolvers += Resolver.bintrayRepo("nlytx-io", "factorie-nlp-api")
 Access the API:
 
 ```scala
-import io.nlytx.factorienlp.api.AnnotatorPipelines
-import io.nlytx.factorienlp.api.DocumentModel.Document
+import io.nlytx.nlp.api.AnnotatorPipelines
+import io.nlytx.nlp.api.DocumentModel.Document
 
 val ap = AnnotatorPipelines
 
 //The profile method is blocking and for testing only.
 val doc:Document = ap.profile("This is a test document.")
-//
+
+//Check the doc has been annotated
 val success:Boolean = doc.tokenCount==6
 ```
 
