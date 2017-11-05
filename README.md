@@ -16,7 +16,7 @@ libraryDependencies ++= Seq(
         "io.nlytx" %% "nlytx-nlp-api" % "1.0.2",
         "io.nlytx" %% "factorie-nlp-models" % "1.0.3")
 
-resolvers += Resolver.bintrayRepo("nlytx-io", "factorie-nlp-api")
+resolvers += Resolver.bintrayRepo("nlytx-io", "nlytx-nlp")
 ```
 
 Access the API:
