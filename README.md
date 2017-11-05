@@ -30,7 +30,7 @@ val ap = AnnotatorPipelines
 //The profile method is blocking and for testing only.
 val doc:Document = ap.profile("This is a test document.")
 
-//Check the doc has been annotated
+//Check the doc has been tokenised
 val success:Boolean = doc.tokenCount==6
 ```
 
