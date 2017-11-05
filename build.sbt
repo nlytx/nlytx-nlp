@@ -6,7 +6,7 @@ lazy val commonSettings = Seq(
 )
 
 val apiName = "nlytx-nlp-api"
-val apiVersion = "1.0.1"
+val apiVersion = "1.0.2"
 val publish_api_to_BinTray = true
 
 val modelsName = "factorie-nlp-models"
@@ -35,6 +35,8 @@ lazy val nlytx_nlp_api = project.settings(
   commonSettings,
   libraryDependencies ++= (nlytxDeps ++ factorieDeps ++ commonDeps ++ testDeps),
   resolvers += Resolver.bintrayRepo("nlytx","nlytx-nlp"),
+  parallelExecution in Test := false,
+  logBuffered in Test := false,
   publishApi
 )
 
@@ -47,7 +49,7 @@ lazy val factorie_nlp_models = project.settings(
 
 lazy val nlytx_root = project.settings(
   publishArtifact  := false
-).aggregate(nlytx_nlp_api,factorie_nlp_models)
+)
 
 /* Dependencies */
 
@@ -73,6 +75,7 @@ lazy val commonDeps = Seq(
 )	
 
 lazy val testDeps = Seq(
+  "org.scalactic" %% "scalactic" % scalatestV,
   "org.scalatest" %% "scalatest" % scalatestV % Test
 )
 

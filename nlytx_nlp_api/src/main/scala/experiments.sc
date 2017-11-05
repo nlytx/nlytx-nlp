@@ -2,7 +2,7 @@ import cc.factorie.nlp.lemma.WordNetLemmatizer
 import cc.factorie.nlp.ner.ConllChainNer
 import cc.factorie.nlp.pos.OntonotesForwardPosTagger
 import cc.factorie.nlp.wordnet.WordNet
-import io.nlytx.factorie_nlp.annotators.ModelLocator
+import io.nlytx.nlp.annotators.ModelLocator
 
 import scala.io.Source
 

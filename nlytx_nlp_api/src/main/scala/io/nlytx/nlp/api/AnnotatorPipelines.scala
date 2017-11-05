@@ -1,12 +1,11 @@
-package io.nlytx.factorie_nlp.api
+package io.nlytx.nlp.api
 
 import akka.actor.ActorSystem
 import akka.event.Logging
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Flow, Keep, RunnableGraph, Sink, Source}
-import cc.factorie.nlp.segment.{DeterministicNormalizingTokenizer, DeterministicSentenceSegmenter, PlainTokenNormalizer}
-import io.nlytx.factorie_nlp.annotators.{NerTagger, Parser, PosTagger, WordNet}
-import io.nlytx.factorie_nlp.api.DocumentModel.Document
+import io.nlytx.nlp.annotators._
+import io.nlytx.nlp.api.DocumentModel.Document
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
@@ -30,15 +29,14 @@ object AnnotatorPipelines {
   private lazy val doc = Flow[String].map(new Document(_))
 
   //Document Annotators - no models required
-  private lazy val tokeniser = (doc: Document) => DeterministicNormalizingTokenizer.process(doc)
-  private lazy val segmenter = (doc: Document) => DeterministicSentenceSegmenter.process(doc)
-  private lazy val normaliser = (doc: Document) => PlainTokenNormalizer.process(doc)
+  private lazy val tokeniser = (doc: Document) => Tokeniser.process(doc)
+  private lazy val segmenter = (doc: Document) => Segmenter.process(doc)
+  private lazy val normaliser = (doc: Document) => Normaliser.process(doc)
 
   //Document Annotators - load models
 
   private lazy val postagger = (doc: Document) => PosTagger.process(doc)
-  private lazy val wordNetLemmatizer = WordNet.wnLemmatizer
-  private lazy val lemmatiser = (doc: Document) => wordNetLemmatizer.process(doc)
+  private lazy val lemmatiser = (doc: Document) => Lemmatiser.process(doc)
   private lazy val parser = (doc: Document) => Parser.process(doc)
 
   //Very slow model loading - returns a future

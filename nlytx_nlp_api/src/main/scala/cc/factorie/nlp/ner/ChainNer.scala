@@ -40,13 +40,15 @@ abstract class ChainNer[L<:NerTag](val labelDomain: CategoricalDomain[String] wi
 
   val FEATURE_PREFIX_REGEX = "^[^@]*$".r
 
-  def process(document:Document) =
-    if(document.tokenCount > 0) {
+  def process(document: Document) =
+    if (document.tokenCount > 0) {
       if (!document.tokens.head.attr.contains(m.runtimeClass))
         document.tokens.map(token => token.attr += newLabel(token, "O"))
       if (!document.tokens.head.attr.contains(classOf[ChainNERFeatures])) {
-        document.tokens.map(token => {token.attr += new ChainNERFeatures(token)})
-        addFeatures(document, (t:Token)=>t.attr[ChainNERFeatures])
+        document.tokens.map(token => {
+          token.attr += new ChainNERFeatures(token)
+        })
+        addFeatures(document, (t: Token) => t.attr[ChainNERFeatures])
       }
       document.sentences.collect {
         case sentence if sentence.nonEmpty =>
@@ -61,14 +63,17 @@ abstract class ChainNer[L<:NerTag](val labelDomain: CategoricalDomain[String] wi
   def tokenAnnotationString(token: Token) = token.attr[L].categoryValue
 
   object ChainNERFeaturesDomain extends CategoricalVectorDomain[String]
+
   class ChainNERFeatures(val token: Token) extends BinaryFeatureVectorVariable[String] {
     def domain = ChainNERFeaturesDomain
+
     override def skipNonCategories = true
   }
-  class ChainNERModel[Features <: CategoricalVectorVar[String]:ClassTag](featuresDomain: CategoricalVectorDomain[String],
-                                                                labelToFeatures: L => Features,
-                                                                labelToToken: L => Token,
-                                                                tokenToLabel: Token => L)
+
+  class ChainNERModel[Features <: CategoricalVectorVar[String] : ClassTag](featuresDomain: CategoricalVectorDomain[String],
+                                                                           labelToFeatures: L => Features,
+                                                                           labelToToken: L => Token,
+                                                                           tokenToLabel: Token => L)
     extends ChainModel[L, Features, Token](labelDomain, featuresDomain, labelToFeatures, labelToToken, tokenToLabel)
 
   val model = new ChainNERModel[ChainNERFeatures](ChainNERFeaturesDomain, l => labelToToken(l).attr[ChainNERFeatures], labelToToken, t => t.attr[L])
@@ -96,7 +101,8 @@ abstract class ChainNer[L<:NerTag](val labelDomain: CategoricalDomain[String] wi
     is.close()
   }
 
-  def prefix( prefixSize : Int, cluster : String ) : String = if(cluster.length > prefixSize) cluster.substring(0, prefixSize) else cluster
+  def prefix(prefixSize: Int, cluster: String): String = if (cluster.length > prefixSize) cluster.substring(0, prefixSize) else cluster
+
   val clusters = JavaHashMap[String, String]()
 
 
@@ -106,7 +112,7 @@ abstract class ChainNer[L<:NerTag](val labelDomain: CategoricalDomain[String] wi
     val tokenSequence = document.tokens.toIndexedSeq
 
     nerLexiconFeatures.addLexiconFeatures(tokenSequence, vf)
-    
+
     for (token <- document.tokens) {
       val features = vf(token)
       val rawWord = token.string
@@ -115,15 +121,15 @@ abstract class ChainNer[L<:NerTag](val labelDomain: CategoricalDomain[String] wi
       features += s"SHAPE=${cc.factorie.app.strings.stringShape(rawWord, 2)}"
       if (token.isPunctuation) features += "PUNCTUATION"
       if (clusters.nonEmpty && clusters.contains(rawWord)) {
-        features += "CLUS="+prefix(4,clusters(rawWord))
-        features += "CLUS="+prefix(6,clusters(rawWord))
-        features += "CLUS="+prefix(10,clusters(rawWord))
-        features += "CLUS="+prefix(20,clusters(rawWord))
+        features += "CLUS=" + prefix(4, clusters(rawWord))
+        features += "CLUS=" + prefix(6, clusters(rawWord))
+        features += "CLUS=" + prefix(10, clusters(rawWord))
+        features += "CLUS=" + prefix(20, clusters(rawWord))
       }
     }
 
     for (sentence <- document.sentences) {
-      cc.factorie.app.chain.Observations.addNeighboringFeatures(sentence.tokens,vf,FEATURE_PREFIX_REGEX,-2,2)
+      cc.factorie.app.chain.Observations.addNeighboringFeatures(sentence.tokens, vf, FEATURE_PREFIX_REGEX, -2, 2)
     }
 
     val tokenBuffer = new CircularBuffer[CategoricalVectorVar[String]](4)
@@ -133,12 +139,12 @@ abstract class ChainNer[L<:NerTag](val labelDomain: CategoricalDomain[String] wi
       val tokenStr = token.string
       val tokenFeatures = vf(token)
       val simpleLowerStr = simplifyDigits(tokenStr).toLowerCase()
-      if (simpleLowerStr.length < 5){
-        tokenFeatures += "P="+cc.factorie.app.strings.prefix(simpleLowerStr, 4)
-        tokenFeatures += "S="+cc.factorie.app.strings.suffix(simpleLowerStr, 4)
+      if (simpleLowerStr.length < 5) {
+        tokenFeatures += "P=" + cc.factorie.app.strings.prefix(simpleLowerStr, 4)
+        tokenFeatures += "S=" + cc.factorie.app.strings.suffix(simpleLowerStr, 4)
       }
 
-      val nextStr = "NEXTWINDOW="+simpleLowerStr
+      val nextStr = "NEXTWINDOW=" + simpleLowerStr
 
       // Add features from window of 4 words before and after
       var i = 0
@@ -154,10 +160,10 @@ abstract class ChainNer[L<:NerTag](val labelDomain: CategoricalDomain[String] wi
         i += 1
       }
       tokenBuffer += vf(token)
-      stringBuffer += "PREVWINDOW="+simpleLowerStr
+      stringBuffer += "PREVWINDOW=" + simpleLowerStr
     }
 
-    val tokenMap = JavaHashMap[String,Seq[String]]()
+    val tokenMap = JavaHashMap[String, Seq[String]]()
     for (token <- document.tokens) {
       val tokenStr = token.string
       if (token.isCapitalized && token.string.length > 1) {
@@ -171,7 +177,7 @@ abstract class ChainNer[L<:NerTag](val labelDomain: CategoricalDomain[String] wi
       }
     }
 
-    document.tokens.foreach(t => if (t.string.matches("[A-Za-z]+")) vf(t) ++= t.charNGrams(2,5).map(n => "NGRAM="+n))
+    document.tokens.foreach(t => if (t.string.matches("[A-Za-z]+")) vf(t) ++= t.charNGrams(2, 5).map(n => "NGRAM=" + n))
   }
 
   def sampleOutputString(tokens: Iterable[Token]): String = {
@@ -184,7 +190,8 @@ abstract class ChainNer[L<:NerTag](val labelDomain: CategoricalDomain[String] wi
           token.attr[L].categoryValue))
     sb.toString
   }
-
+}
+/*
   def train(trainDocs: Seq[Document], testDocs: Seq[Document], rate: Double=0.18, delta: Double=0.066)(implicit random: scala.util.Random): Double = {
 
     def labels(docs: Iterable[Document]): Iterable[L with LabeledMutableDiscreteVar] = {
@@ -262,6 +269,7 @@ abstract class ChainNer[L<:NerTag](val labelDomain: CategoricalDomain[String] wi
     segmentEvaluation.f1
   }
 }
+*/
 /*
 class ChainNerOpts extends cc.factorie.util.CmdOptions with SharedNLPCmdOptions with ModelProviderCmdOptions with DefaultCmdOptions {
   val saveModel = new CmdOption("save-model", "CoNLLChainNer.factorie", "FILE", "Filename for the model (saving a trained model or reading a running model.")

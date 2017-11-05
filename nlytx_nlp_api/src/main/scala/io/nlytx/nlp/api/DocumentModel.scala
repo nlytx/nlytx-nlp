@@ -1,4 +1,4 @@
-package io.nlytx.factorie_nlp.api
+package io.nlytx.nlp.api
 
 import cc.factorie.nlp
 /**
@@ -10,7 +10,7 @@ object DocumentModel {
   type Section = nlp.Section
   type Sentence = nlp.Sentence
   type Token = nlp.Token
-  type PosTag = nlp.pos.PosTag
-  type NerTag = nlp.ner.NerTag
+  type PosTag = nlp.pos.PennPosTag
+  type NerTag = nlp.ner.BilouConllNerTag
 
 }

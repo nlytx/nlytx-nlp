@@ -11,9 +11,9 @@ This is a significantly modified version of [Factorie](https://github.com/factor
 
 Add the following to your build.sbt file:
 
-```scala
+```sbtshell
 libraryDependencies ++= Seq(
-        "io.nlytx" %% "nlytx-nlp-api" % "1.0.1",
+        "io.nlytx" %% "nlytx-nlp-api" % "1.0.2",
         "io.nlytx" %% "factorie-nlp-models" % "1.0.3")
 
 resolvers += Resolver.bintrayRepo("nlytx-io", "factorie-nlp-api")
@@ -22,14 +22,15 @@ resolvers += Resolver.bintrayRepo("nlytx-io", "factorie-nlp-api")
 Access the API:
 
 ```scala
-import io.nlytx.factorienlp.api.AnnotatorPipelines
-import io.nlytx.factorienlp.api.DocumentModel.Document
+import io.nlytx.nlp.api.AnnotatorPipelines
+import io.nlytx.nlp.api.DocumentModel.Document
 
 val ap = AnnotatorPipelines
 
 //The profile method is blocking and for testing only.
 val doc:Document = ap.profile("This is a test document.")
-//
+
+//Check the doc has been tokenised
 val success:Boolean = doc.tokenCount==6
 ```
 

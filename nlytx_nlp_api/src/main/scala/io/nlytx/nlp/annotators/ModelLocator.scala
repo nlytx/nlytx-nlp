@@ -1,4 +1,4 @@
-package io.nlytx.factorie_nlp.annotators
+package io.nlytx.nlp.annotators
 
 import java.io.InputStream
 import java.net.URL
@@ -7,7 +7,7 @@ import cc.factorie.nlp.lexicon.{LexiconsProvider, StaticLexicons}
 import cc.factorie.nlp.ner.StaticLexiconFeatures
 import cc.factorie.util.ISAble.buffered
 import cc.factorie.util.ModelProvider
-import io.nlytx.factorie_nlp.api.AnnotatorPipelines
+import io.nlytx.nlp.api.AnnotatorPipelines
 
 import scala.reflect.ClassTag
 
@@ -75,12 +75,8 @@ object ModelLocator {
 
   val wordNetStreamFactory:String=>InputStream = (file:String) => getClass.getResourceAsStream("/models/wordnet/"+file)
 
-  object StaticLexicons extends StaticLexicons()(ModelLocator.getLexiconProvider())
 
-  object LexiconFeatures {
-    def apply(lang: String = "en"): StaticLexiconFeatures = {
-      new StaticLexiconFeatures(ModelLocator.StaticLexicons, lang)
-    }
-  }
+
+
 
 }

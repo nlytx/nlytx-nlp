@@ -1,4 +1,4 @@
-package io.nlytx.factorie_nlp.annotators
+package io.nlytx.nlp.annotators
 
 import cc.factorie.nlp.parse.OntonotesTransitionBasedParser
 
