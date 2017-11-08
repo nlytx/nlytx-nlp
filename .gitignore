@@ -17,3 +17,5 @@
 /project/target/
 /target/
 /nlytx_nlp_api/src/main/scala/io/nlytx/factorie_nlp/experiments.sc
+/nlytx_nlp_api/src/main/scala/cc.zip
+/factorie_nlp_models/src/main/resources/models.zip
