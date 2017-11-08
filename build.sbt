@@ -8,17 +8,12 @@ lazy val commonSettings = Seq(
 val projectName = "nlytx-nlp"
 
 val apiName = "nlytx-nlp-api"
-val apiVersion = "1.0.4"
+val apiVersion = "1.1.0"
 val publish_api_to_BinTray = true
 
 val commonsName = "nlytx-nlp-commons"
 val commonsVersion = "1.0.0"
-val publish_commons_to_BinTray = true
-
-//val modelsName = "factorie-nlp-models"
-//val modelsVersion = "1.0.3"
-//val publish_models_to_BinTray = false
-
+val publish_commons_to_BinTray = false
 
 /* Dependencies Versions */
 
@@ -26,7 +21,7 @@ val scalaLangV = "2.12.3"
 val scalaParserV = "1.0.6"
 val jblasV = "1.2.4"
 val apacheComsCompressV = "1.15"
-val apacheComsLangV = "3.6"
+val apacheComsLangV = "3.7"
 val akkaStreamV = "2.5.6"
 val json4sV = "3.5.3"
 val slf4jV = "1.7.25"
@@ -58,20 +53,6 @@ lazy val nlytx_nlp_commons = project.settings(
   logBuffered in Test := false,
   publishCommons
 )
-
-
-//
-//lazy val factorie_nlp_models = project.settings(
-//  name := modelsName,
-//  version := modelsVersion,
-//  commonSettings,
-//  publishModels
-//)
-
-//lazy val nlytx_nlp = (project in file(".")).settings(
-//  name := projectName,
-//  publishArtifact  := false
-//)
 
 /* Dependencies */
 
