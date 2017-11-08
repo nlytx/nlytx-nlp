@@ -46,7 +46,7 @@ lazy val nlytx_nlp = (project in file(".")).settings(
   parallelExecution in Test := false,
   logBuffered in Test := false,
   publishApi
-)
+).aggregate(nlytx_nlp_commons)
 
 lazy val nlytx_nlp_commons = project.settings(
   name := commonsName,
