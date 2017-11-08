@@ -5,13 +5,19 @@ lazy val commonSettings = Seq(
   organization := "io.nlytx"
 )
 
+val projectName = "nlytx-nlp"
+
 val apiName = "nlytx-nlp-api"
-val apiVersion = "1.0.2"
+val apiVersion = "1.0.4"
 val publish_api_to_BinTray = true
 
-val modelsName = "factorie-nlp-models"
-val modelsVersion = "1.0.3"
-val publish_models_to_BinTray = false
+val commonsName = "nlytx-nlp-commons"
+val commonsVersion = "1.0.0"
+val publish_commons_to_BinTray = true
+
+//val modelsName = "factorie-nlp-models"
+//val modelsVersion = "1.0.3"
+//val publish_models_to_BinTray = false
 
 
 /* Dependencies Versions */
@@ -26,10 +32,12 @@ val json4sV = "3.5.3"
 val slf4jV = "1.7.25"
 val logbackV = "1.2.3"
 val scalatestV = "3.0.4"
+val factorieNlpV = "1.0.4"
+val factorieNlpModelsV = "1.0.3"
 
 /* Projects */
 
-lazy val nlytx_nlp_api = project.settings(
+lazy val nlytx_nlp = (project in file(".")).settings(
   name := apiName,
   version := apiVersion,
   commonSettings,
@@ -40,16 +48,30 @@ lazy val nlytx_nlp_api = project.settings(
   publishApi
 )
 
-lazy val factorie_nlp_models = project.settings(
-  name := modelsName,
-  version := modelsVersion,
+lazy val nlytx_nlp_commons = project.settings(
+  name := commonsName,
+  version := commonsVersion,
   commonSettings,
-  publishModels
+  libraryDependencies ++= testDeps,
+  resolvers += Resolver.bintrayRepo("nlytx","nlytx-nlp"),
+  parallelExecution in Test := true,
+  logBuffered in Test := false,
+  publishCommons
 )
 
-lazy val nlytx_root = project.settings(
-  publishArtifact  := false
-)
+
+//
+//lazy val factorie_nlp_models = project.settings(
+//  name := modelsName,
+//  version := modelsVersion,
+//  commonSettings,
+//  publishModels
+//)
+
+//lazy val nlytx_nlp = (project in file(".")).settings(
+//  name := projectName,
+//  publishArtifact  := false
+//)
 
 /* Dependencies */
 
@@ -59,7 +81,8 @@ lazy val nlytxDeps = Seq(
 )
 
 lazy val factorieDeps = Seq(
-  "io.nlytx" %% "factorie-nlp-models" % "1.0.3",
+  "io.nlytx" %% "factorie-nlp" % factorieNlpV,
+  "io.nlytx" %% "factorie-nlp-models" % factorieNlpModelsV,
   "org.scala-lang.modules" %% "scala-parser-combinators" % scalaParserV,
   "org.scala-lang" % "scala-compiler" % scalaLangV,
   "org.scala-lang" % "scala-reflect" % scalaLangV,
@@ -85,15 +108,16 @@ lazy val binTrayRealm = "Bintray API Realm"
 lazy val binTrayUrl = s"https://api.bintray.com/content/nlytx/nlytx-nlp/"
 lazy val binTrayCred = Credentials(Path.userHome / ".bintray" / ".credentials")
 lazy val pubLicence = ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
-lazy val modelsBinTray = Some("Bintray API Realm" at binTrayUrl + s"$modelsName/$modelsVersion/")
+
 lazy val apiBinTray = Some(binTrayRealm at binTrayUrl + s"$apiName/$apiVersion/")
+lazy val commonsBinTray = Some("Bintray API Realm" at binTrayUrl + s"$commonsName/$commonsVersion/")
 
 
-lazy val publishModels = {
-  if (publish_models_to_BinTray) Seq(
+lazy val publishCommons = {
+  if (publish_commons_to_BinTray) Seq(
     publishMavenStyle := true,
     licenses += pubLicence,
-    publishTo := modelsBinTray,
+    publishTo := commonsBinTray,
     credentials += binTrayCred
   )
   else Seq(
