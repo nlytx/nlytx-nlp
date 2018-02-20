@@ -1,7 +1,7 @@
 /* Main settings */
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.3",
+  scalaVersion := "2.12.4",
   organization := "io.nlytx"
 )
 
@@ -15,14 +15,14 @@ val commonsName = "nlytx-nlp-commons"
 val commonsVersion = "1.0.0"
 val publish_commons_to_BinTray = true
 
-//val modelsName = "factorie-nlp-models"
-//val modelsVersion = "1.0.3"
-//val publish_models_to_BinTray = false
+val expressionsName = "nlytx-nlp-expressions"
+val expressionsVersion = "1.0.0"
+val publish_expressions_to_BinTray = true
 
 
 /* Dependencies Versions */
 
-val scalaLangV = "2.12.3"
+val scalaLangV = "2.12.4"
 val scalaParserV = "1.0.6"
 val jblasV = "1.2.4"
 val apacheComsCompressV = "1.15"
@@ -46,7 +46,7 @@ lazy val nlytx_nlp = (project in file(".")).settings(
   parallelExecution in Test := false,
   logBuffered in Test := false,
   publishApi
-).aggregate(nlytx_nlp_commons)
+).aggregate(nlytx_nlp_commons,nlytx_nlp_expressions)
 
 lazy val nlytx_nlp_commons = project.settings(
   name := commonsName,
@@ -60,18 +60,16 @@ lazy val nlytx_nlp_commons = project.settings(
 )
 
 
-//
-//lazy val factorie_nlp_models = project.settings(
-//  name := modelsName,
-//  version := modelsVersion,
-//  commonSettings,
-//  publishModels
-//)
-
-//lazy val nlytx_nlp = (project in file(".")).settings(
-//  name := projectName,
-//  publishArtifact  := false
-//)
+lazy val nlytx_nlp_expressions = project.settings(
+  name := expressionsName,
+  version := expressionsVersion,
+  commonSettings,
+  libraryDependencies ++= (nlytxDeps ++ factorieDeps ++ commonDeps ++ testDeps),
+  resolvers += Resolver.bintrayRepo("nlytx","nlytx-nlp"),
+  parallelExecution in Test := true,
+  logBuffered in Test := false,
+  publishCommons
+).dependsOn(LocalProject("nlytx_nlp"))
 
 /* Dependencies */
 
@@ -110,7 +108,8 @@ lazy val binTrayCred = Credentials(Path.userHome / ".bintray" / ".credentials")
 lazy val pubLicence = ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
 lazy val apiBinTray = Some(binTrayRealm at binTrayUrl + s"$apiName/$apiVersion/")
-lazy val commonsBinTray = Some("Bintray API Realm" at binTrayUrl + s"$commonsName/$commonsVersion/")
+lazy val commonsBinTray = Some(binTrayRealm at binTrayUrl + s"$commonsName/$commonsVersion/")
+lazy val expressionsBinTray = Some(binTrayRealm at binTrayUrl + s"$expressionsName/$expressionsVersion/")
 
 
 lazy val publishCommons = {
@@ -118,6 +117,18 @@ lazy val publishCommons = {
     publishMavenStyle := true,
     licenses += pubLicence,
     publishTo := commonsBinTray,
+    credentials += binTrayCred
+  )
+  else Seq(
+    publishArtifact := false
+  )
+}
+
+lazy val publishExpressions = {
+  if (publish_expressions_to_BinTray) Seq(
+    publishMavenStyle := true,
+    licenses += pubLicence,
+    publishTo := expressionsBinTray,
     credentials += binTrayCred
   )
   else Seq(
