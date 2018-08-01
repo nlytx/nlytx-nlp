@@ -71,7 +71,7 @@ object ReflectiveExpressionPipeline {
     system.log.info(docSentences.toString)
     val sentencePosTags = docSentences.map(_.tokens.map(_.posTag.categoryValue))
     system.log.info(sentencePosTags.toString)
-    PosTagAnalyser.analyse(sentencePosTags,docSentences.map(_.tokens.map(_.lemmaString)))
+    PosTagAnalyser.analyse(sentencePosTags,docSentences.map(_.tokens.map(_.string)))
   }
 
   def getCoded(codedSentences: Seq[CodedSentence]): Seq[Coded] = {

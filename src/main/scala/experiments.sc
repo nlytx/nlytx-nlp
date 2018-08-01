@@ -1,18 +1,33 @@
-import cc.factorie.nlp.lemma.WordNetLemmatizer
-import cc.factorie.nlp.ner.ConllChainNer
-import cc.factorie.nlp.pos.OntonotesForwardPosTagger
-import cc.factorie.nlp.wordnet.WordNet
-import io.nlytx.nlp.annotators.ModelLocator
-
-import scala.io.Source
+import io.nlytx.nlp.lda.{Analyser_LDA, TopicResults}
 
 
-//val wn = new WordNet(ModelLocator.wordNetStreamFactory)
+def lda(indexedText:Map[String,String],numTopics: Int, iterations: Int) = {
 
-//val wnl = new WordNetLemmatizer(ModelLocator.wordNetStreamFactory)
+  val ldaData = Analyser_LDA.process(indexedText, numTopics, iterations)
+  println("Analysed: "+ldaData.numDocuments)
+  println("Get topics...")
+  val topics = ldaData.getTopics(5)
+  println("Get docTopics...")
+  val docTopics = ldaData.getDocumentTopics
+  println("Build and save topicResults...")
+  val topicResults = new TopicResults(topics, docTopics)
+  //Check document
+  val doc = ldaData.documents.head
+  println("file: "+doc.file +"| domain: "+doc.domain.toString+"| theta: "+doc.theta.value.toString()+"| zs: "+doc.zs.toString())
 
-//val wn = new WordNet(ModelLocator.wordNetStreamFactory)
+  topicResults
 
+}
 
-val wnl = new WordNetLemmatizer(ModelLocator.wordNetStreamFactory)
+val input = Map("1"->"This is document one.",
+  "2"->"This is another doc.",
+  "3"->"And this one is really different from the others.",
+  "4" -> "The sky is blue during the day.",
+  "5" -> "Well, I'm not sure if this is working properly. I can't see the topics lining up.")
+
+val result = lda(input,4,10000)
+
+result.topics.foreach { t => println(t)}
+
+result.topicDistribution.foreach {d => println(d)}
 
