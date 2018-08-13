@@ -8,7 +8,7 @@ lazy val commonSettings = Seq(
 val projectName = "nlytx-nlp"
 
 val apiName = "nlytx-nlp-api"
-val apiVersion = "1.0.4"
+val apiVersion = "1.1.0"
 val publish_api_to_BinTray = true
 
 val commonsName = "nlytx-nlp-commons"
@@ -26,7 +26,7 @@ val scalaLangV = "2.12.4"
 val scalaParserV = "1.0.6"
 val jblasV = "1.2.4"
 val apacheComsCompressV = "1.15"
-val apacheComsLangV = "3.6"
+val apacheComsLangV = "3.7"
 val akkaStreamV = "2.5.6"
 val json4sV = "3.5.3"
 val slf4jV = "1.7.25"
