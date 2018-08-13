@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/nlytx/nlytx-nlp.svg?branch=master)](https://travis-ci.org/nlytx/nlytx-nlp) ![scalaVersion](https://img.shields.io/badge/scala-2.12.4-red.svg) ![Liencse](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)
+[![Build Status](https://travis-ci.org/nlytx/nlytx-nlp.svg?branch=master)](https://travis-ci.org/nlytx/nlytx-nlp) ![scalaVersion](https://img.shields.io/badge/scala-2.12.6-red.svg) ![Liencse](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)
 
 [ ![Download](https://api.bintray.com/packages/nlytx/nlytx-nlp/factorie-nlp-models/images/download.svg) ](https://bintray.com/nlytx/nlytx-nlp/factorie-nlp-models/_latestVersion) *factorie-nlp-models*
 
@@ -13,7 +13,9 @@ Add the following to your build.sbt file:
 
 ```sbtshell
 libraryDependencies ++= Seq(
-        "io.nlytx" %% "nlytx-nlp-api" % "1.0.2",
+        "io.nlytx" %% "nlytx-nlp-api" % "1.1.1",
+        "io.nlytx" %% "nlytx-nlp-commons" % "1.0.0",
+        "io.nlytx" %% "nlytx-nlp-expressions" % "1.0.1",
         "io.nlytx" %% "factorie-nlp" % "1.0.4",
         "io.nlytx" %% "factorie-nlp-models" % "1.0.3")
 

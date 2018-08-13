@@ -10,7 +10,7 @@ lazy val commonSettings = Seq(
 val projectName = "nlytx-nlp"
 
 val apiName = "nlytx-nlp-api"
-val apiVersion = "1.1.0"
+val apiVersion = "1.1.1"
 val publish_api_to_BinTray = true
 
 val commonsName = "nlytx-nlp-commons"
@@ -18,7 +18,7 @@ val commonsVersion = "1.0.0"
 val publish_commons_to_BinTray = true
 
 val expressionsName = "nlytx-nlp-expressions"
-val expressionsVersion = "1.0.0"
+val expressionsVersion = "1.0.1"
 val publish_expressions_to_BinTray = true
 
 
