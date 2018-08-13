@@ -1,7 +1,9 @@
 /* Main settings */
 
+
+
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.4",
+  scalaVersion := scalaLangV,
   organization := "io.nlytx"
 )
 
@@ -22,16 +24,16 @@ val publish_expressions_to_BinTray = true
 
 /* Dependencies Versions */
 
-val scalaLangV = "2.12.4"
-val scalaParserV = "1.0.6"
+val scalaLangV = "2.12.6"
+val scalaParserV = "1.1.1"
 val jblasV = "1.2.4"
-val apacheComsCompressV = "1.15"
+val apacheComsCompressV = "1.17"
 val apacheComsLangV = "3.7"
-val akkaStreamV = "2.5.6"
-val json4sV = "3.5.3"
+val akkaStreamV = "2.5.14"
+val json4sV = "3.6.0"
 val slf4jV = "1.7.25"
 val logbackV = "1.2.3"
-val scalatestV = "3.0.4"
+val scalatestV = "3.0.5"
 val factorieNlpV = "1.0.4"
 val factorieNlpModelsV = "1.0.3"
 
