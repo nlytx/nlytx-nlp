@@ -10,15 +10,15 @@ lazy val commonSettings = Seq(
 val projectName = "nlytx-nlp"
 
 val apiName = "nlytx-nlp-api"
-val apiVersion = "1.1.1"
+val apiVersion = "1.1.2"
 val publish_api_to_BinTray = true
 
 val commonsName = "nlytx-nlp-commons"
-val commonsVersion = "1.0.0"
+val commonsVersion = "1.1.2"
 val publish_commons_to_BinTray = true
 
 val expressionsName = "nlytx-nlp-expressions"
-val expressionsVersion = "1.0.1"
+val expressionsVersion = "1.1.2"
 val publish_expressions_to_BinTray = true
 
 
@@ -104,22 +104,26 @@ lazy val testDeps = Seq(
 
 /* Publishing  */
 
-lazy val binTrayRealm = "Bintray API Realm"
-lazy val binTrayUrl = s"https://api.bintray.com/content/nlytx/nlytx-nlp/"
+//lazy val binTrayRealm = "Bintray API Realm"
+//lazy val binTrayUrl = s"https://api.bintray.com/content/nlytx/nlytx-nlp/"
 lazy val binTrayCred = Credentials(Path.userHome / ".bintray" / ".credentials")
 lazy val pubLicence = ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
+lazy val binTrayOrg = Some("nlytx")
+lazy val binTrayRepo = "nlytx-nlp"
 
-lazy val apiBinTray = Some(binTrayRealm at binTrayUrl + s"$apiName/$apiVersion/")
-lazy val commonsBinTray = Some(binTrayRealm at binTrayUrl + s"$commonsName/$commonsVersion/")
-lazy val expressionsBinTray = Some(binTrayRealm at binTrayUrl + s"$expressionsName/$expressionsVersion/")
+//lazy val apiBinTray = Some(binTrayRealm at binTrayUrl + s"$apiName/$apiVersion/")
+//lazy val commonsBinTray = Some(binTrayRealm at binTrayUrl + s"$commonsName/$commonsVersion/")
+//lazy val expressionsBinTray = Some(binTrayRealm at binTrayUrl + s"$expressionsName/$expressionsVersion/")
 
 
 lazy val publishCommons = {
   if (publish_commons_to_BinTray) Seq(
     publishMavenStyle := true,
     licenses += pubLicence,
-    publishTo := commonsBinTray,
-    credentials += binTrayCred
+    //publishTo := commonsBinTray,
+    credentials += binTrayCred,
+    bintrayOrganization := binTrayOrg,
+    bintrayRepository := binTrayRepo
   )
   else Seq(
     publishArtifact := false
@@ -130,8 +134,10 @@ lazy val publishExpressions = {
   if (publish_expressions_to_BinTray) Seq(
     publishMavenStyle := true,
     licenses += pubLicence,
-    publishTo := expressionsBinTray,
-    credentials += binTrayCred
+    //publishTo := expressionsBinTray,
+    credentials += binTrayCred,
+    bintrayOrganization := binTrayOrg,
+    bintrayRepository := binTrayRepo
   )
   else Seq(
     publishArtifact := false
@@ -142,8 +148,10 @@ lazy val publishApi = {
   if (publish_api_to_BinTray) Seq(
     publishMavenStyle := true,
     licenses += pubLicence,
-    publishTo := apiBinTray,
-    credentials += binTrayCred
+    //publishTo := apiBinTray,
+    credentials += binTrayCred,
+    bintrayOrganization := binTrayOrg,
+    bintrayRepository := binTrayRepo
   )
   else Seq(
     publishArtifact := false
