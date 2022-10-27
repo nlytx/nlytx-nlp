@@ -1,8 +1,9 @@
 [![Build Status](https://travis-ci.org/nlytx/nlytx-nlp.svg?branch=master)](https://travis-ci.org/nlytx/nlytx-nlp) ![scalaVersion](https://img.shields.io/badge/scala-2.12.6-red.svg) ![Liencse](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.nlytx/nlytx-nlp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.nlytx/nlytx-nlp) *nlytx-nlp-api*
 
-[ ![Download](https://api.bintray.com/packages/nlytx/nlytx-nlp/factorie-nlp-models/images/download.svg) ](https://bintray.com/nlytx/nlytx-nlp/factorie-nlp-models/_latestVersion) *factorie-nlp-models*
+[ ![Download]() *factorie-nlp-models*
 
-[ ![Download](https://api.bintray.com/packages/nlytx/nlytx-nlp/nlytx-nlp-api/images/download.svg) ](https://bintray.com/nlytx/nlytx-nlp/nlytx-nlp-api/_latestVersion) *nlytx-nlp-api*
+
 # nlytx-nlp
 
 A high level API for Factorie NLP services using akka streams.
@@ -13,13 +14,11 @@ Add the following to your build.sbt file:
 
 ```sbtshell
 libraryDependencies ++= Seq(
-        "io.nlytx" %% "nlytx-nlp-api" % "1.1.2",
-        "io.nlytx" %% "nlytx-nlp-commons" % "1.1.2",
-        "io.nlytx" %% "nlytx-nlp-expressions" % "1.1.2",
+        "io.nlytx" %% "nlytx-nlp-api" % "1.1.3",
+        "io.nlytx" %% "nlytx-nlp-commons" % "1.1.3",
+        "io.nlytx" %% "nlytx-nlp-expressions" % "1.1.3",
         "io.nlytx" %% "factorie-nlp" % "1.0.4",
         "io.nlytx" %% "factorie-nlp-models" % "1.0.3")
-
-resolvers += Resolver.bintrayRepo("nlytx", "nlytx-nlp")
 ```
 
 Access the API:
