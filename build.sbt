@@ -1,25 +1,27 @@
+import xerial.sbt.Sonatype._
+
 /* Main settings */
 
-
+val organisation = "io.nlytx"
+val projectName = "nlytx-nlp"
+val projectVersion = "1.1.3"
 
 lazy val commonSettings = Seq(
   scalaVersion := scalaLangV,
-  organization := "io.nlytx"
+  organization := organisation
 )
 
-val projectName = "nlytx-nlp"
-
 val apiName = "nlytx-nlp-api"
-val apiVersion = "1.1.2"
-val publish_api_to_BinTray = true
+val apiVersion = projectVersion
+val publish_api = true
 
 val commonsName = "nlytx-nlp-commons"
-val commonsVersion = "1.1.2"
-val publish_commons_to_BinTray = true
+val commonsVersion = projectVersion
+val publish_commons = true
 
 val expressionsName = "nlytx-nlp-expressions"
-val expressionsVersion = "1.1.2"
-val publish_expressions_to_BinTray = true
+val expressionsVersion = projectVersion
+val publish_expressions = true
 
 
 /* Dependencies Versions */
@@ -44,7 +46,6 @@ lazy val nlytx_nlp = (project in file(".")).settings(
   version := apiVersion,
   commonSettings,
   libraryDependencies ++= (nlytxDeps ++ factorieDeps ++ commonDeps ++ testDeps),
-  resolvers += Resolver.bintrayRepo("nlytx","nlytx-nlp"),
   parallelExecution in Test := false,
   logBuffered in Test := false,
   publishApi
@@ -55,7 +56,6 @@ lazy val nlytx_nlp_commons = project.settings(
   version := commonsVersion,
   commonSettings,
   libraryDependencies ++= testDeps,
-  resolvers += Resolver.bintrayRepo("nlytx","nlytx-nlp"),
   parallelExecution in Test := true,
   logBuffered in Test := false,
   publishCommons
@@ -67,7 +67,6 @@ lazy val nlytx_nlp_expressions = project.settings(
   version := expressionsVersion,
   commonSettings,
   libraryDependencies ++= (nlytxDeps ++ factorieDeps ++ commonDeps ++ testDeps),
-  resolvers += Resolver.bintrayRepo("nlytx","nlytx-nlp"),
   parallelExecution in Test := true,
   logBuffered in Test := false,
   publishCommons
@@ -104,26 +103,54 @@ lazy val testDeps = Seq(
 
 /* Publishing  */
 
-//lazy val binTrayRealm = "Bintray API Realm"
-//lazy val binTrayUrl = s"https://api.bintray.com/content/nlytx/nlytx-nlp/"
-lazy val binTrayCred = Credentials(Path.userHome / ".bintray" / ".credentials")
 lazy val pubLicence = ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
-lazy val binTrayOrg = Some("nlytx")
-lazy val binTrayRepo = "nlytx-nlp"
-
-//lazy val apiBinTray = Some(binTrayRealm at binTrayUrl + s"$apiName/$apiVersion/")
-//lazy val commonsBinTray = Some(binTrayRealm at binTrayUrl + s"$commonsName/$commonsVersion/")
-//lazy val expressionsBinTray = Some(binTrayRealm at binTrayUrl + s"$expressionsName/$expressionsVersion/")
+lazy val pubOrg = Some("nlytx")
+lazy val pubRepo = "nlytx-nlp"
 
 
 lazy val publishCommons = {
-  if (publish_commons_to_BinTray) Seq(
+  if (publish_commons) Seq(
+    publishTo := sonatypePublishToBundle.value,
+    sonatypeCredentialHost := "s01.oss.sonatype.org",
+    sonatypeProfileName := organisation,
     publishMavenStyle := true,
     licenses += pubLicence,
-    //publishTo := commonsBinTray,
-    credentials += binTrayCred,
-    bintrayOrganization := binTrayOrg,
-    bintrayRepository := binTrayRepo
+    sonatypeProjectHosting := Some(GitHubHosting("nlytx", "nlytx-nlp", "andrew@nlytx.io")),
+    developers := List(
+      Developer(
+        id = "io.nlytx",
+        name = "Andrew Gibson",
+        email = "andrew@nlytx.io",
+        url = url("http://nlytx.io")
+      )
+    ),
+    //credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials"),
+//    name := organisation+":"+commonsName,
+//    description := "General NLP tools",
+//
+//    credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials"),
+//    organizationHomepage := Some(url("http://nlytx.io/")),
+//    organization := organisation + "." + projectName,
+//    organizationName := organisation,
+//    scmInfo := Some(
+//      ScmInfo(
+//        url("https://github.com/nlytx/nlytx-nlp"),
+//        "scm:git@github.com:nlytx/nlytx-nlp.git"
+//      )
+//    ),
+//
+      // Remove all additional repository other than Maven Central from POM
+//      pomIncludeRepository := { _ => false },
+//      publishTo := {
+//        // For accounts created after Feb 2021:
+//        val nexus = "https://s01.oss.sonatype.org/"
+//        if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+//        else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+//      },
+//      publishMavenStyle := true
+
+    //publishTo := sonatypePublishToBundle.value,
+    //sonatypeCredentialHost := "s01.oss.sonatype.org"
   )
   else Seq(
     publishArtifact := false
@@ -131,13 +158,54 @@ lazy val publishCommons = {
 }
 
 lazy val publishExpressions = {
-  if (publish_expressions_to_BinTray) Seq(
+  if (publish_expressions) Seq(
+    publishTo := sonatypePublishToBundle.value,
+    sonatypeCredentialHost := "s01.oss.sonatype.org",
+    sonatypeProfileName := organisation,
     publishMavenStyle := true,
     licenses += pubLicence,
-    //publishTo := expressionsBinTray,
-    credentials += binTrayCred,
-    bintrayOrganization := binTrayOrg,
-    bintrayRepository := binTrayRepo
+    sonatypeProjectHosting := Some(GitHubHosting("nlytx", "nlytx-nlp", "andrew@nlytx.io")),
+    developers := List(
+      Developer(
+        id = "io.nlytx",
+        name = "Andrew Gibson",
+        email = "andrew@nlytx.io",
+        url = url("http://nlytx.io")
+      )
+    ),
+    //credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials"),
+    //    description := "Identify reflective expressions",
+
+//    credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials"),
+//    organizationHomepage := Some(url("http://nlytx.io/")),
+//    organization := organisation + "." + projectName,
+//    organizationName := organisation,
+//    scmInfo := Some(
+//      ScmInfo(
+//        url("https://github.com/nlytx/nlytx-nlp"),
+//        "scm:git@github.com:nlytx/nlytx-nlp.git"
+//      )
+//    ),
+//    developers := List(
+//      Developer(
+//        id = "io.nlytx",
+//        name = "Andrew Gibson",
+//        email = "andrew@nlytx.io",
+//        url = url("http://nlytx.io")
+//      )
+//    ),
+//    // Remove all additional repository other than Maven Central from POM
+//    pomIncludeRepository := { _ => false },
+//    publishTo := {
+//      // For accounts created after Feb 2021:
+//      val nexus = "https://s01.oss.sonatype.org/"
+//      if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+//      else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+//    },
+//    publishMavenStyle := true
+
+    //publishTo := sonatypePublishToBundle.value,
+    //sonatypeCredentialHost := "s01.oss.sonatype.org"
   )
   else Seq(
     publishArtifact := false
@@ -145,15 +213,57 @@ lazy val publishExpressions = {
 }
 
 lazy val publishApi = {
-  if (publish_api_to_BinTray) Seq(
+  if (publish_api) Seq(
+    publishTo := sonatypePublishToBundle.value,
+    sonatypeCredentialHost := "s01.oss.sonatype.org",
+    sonatypeProfileName := organisation,
     publishMavenStyle := true,
     licenses += pubLicence,
-    //publishTo := apiBinTray,
-    credentials += binTrayCred,
-    bintrayOrganization := binTrayOrg,
-    bintrayRepository := binTrayRepo
+    sonatypeProjectHosting := Some(GitHubHosting("nlytx", "nlytx-nlp", "andrew@nlytx.io")),
+    developers := List(
+      Developer(
+        id = "io.nlytx",
+        name = "Andrew Gibson",
+        email = "andrew@nlytx.io",
+        url = url("http://nlytx.io")
+      )
+    ),
+    //credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials"),
+    //    description := "Expose API for nlytx-nlp",
+
+//    credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials"), //~/.sbt/sonatype_credentials
+//    organizationHomepage := Some(url("http://nlytx.io/")),
+//    organization := organisation + "." + projectName,
+//    organizationName := organisation,
+//    scmInfo := Some(
+//      ScmInfo(
+//        url("https://github.com/nlytx/nlytx-nlp"),
+//        "scm:git@github.com:nlytx/nlytx-nlp.git"
+//      )
+//    ),
+//    developers := List(
+//      Developer(
+//        id = "io.nlytx",
+//        name = "Andrew Gibson",
+//        email = "andrew@nlytx.io",
+//        url = url("http://nlytx.io")
+//      )
+//    ),
+//    // Remove all additional repository other than Maven Central from POM
+//    pomIncludeRepository := { _ => false },
+//    publishTo := {
+//      // For accounts created after Feb 2021:
+//      val nexus = "https://s01.oss.sonatype.org/"
+//      if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+//      else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+//    },
+//    publishMavenStyle := true
+
+    //publishTo := sonatypePublishToBundle.value,
+    //sonatypeCredentialHost := "s01.oss.sonatype.org"
   )
   else Seq(
     publishArtifact := false
   )
 }
+
