@@ -1,9 +1,6 @@
-[![Build Status](https://travis-ci.org/nlytx/nlytx-nlp.svg?branch=master)](https://travis-ci.org/nlytx/nlytx-nlp) ![scalaVersion](https://img.shields.io/badge/scala-2.12.6-red.svg) ![Liencse](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)
+> This project is no longer active
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.nlytx/nlytx-nlp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.nlytx/nlytx-nlp) 
-
-Download [ ![Download]() *factorie-nlp-models*
-
+![scalaVersion](https://img.shields.io/badge/scala-2.12.6-red.svg) ![Liencse](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)
 
 # nlytx-nlp
 
